@@ -86,6 +86,7 @@ class _HomePageState extends State<HomePage> with InputValidationMixin {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     suffixIcon: IconButton(
+                      key: Key('searchButton'),
                       icon: const Icon(Icons.search),
                       onPressed: () {
                         onSubmit();
@@ -95,7 +96,8 @@ class _HomePageState extends State<HomePage> with InputValidationMixin {
                   textCapitalization: TextCapitalization.characters,
                   controller: _searchController,
                   validator: (value) {
-                    if (isGSTINValid(value!.toUpperCase())) {
+                    if (InputValidationMixin.isGSTINValid(
+                        value!.toUpperCase())) {
                       return null;
                     } else {
                       return 'Enter a valid GSTIN number';
@@ -122,7 +124,7 @@ class _HomePageState extends State<HomePage> with InputValidationMixin {
 }
 
 mixin InputValidationMixin {
-  bool isGSTINValid(String number) {
+  static bool isGSTINValid(String number) {
     RegExp regex =
         RegExp(r'\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}');
     return regex.hasMatch(number);
